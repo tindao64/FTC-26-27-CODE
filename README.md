@@ -1,5 +1,6 @@
 ## NOTICE
 
+This is a fork of the FTC SDK, for the William Lyon Mackenzie C.I. FTC team. Please head [upstream](https://github.com/FIRST-Tech-Challenge/FtcRobotController) if you are looking for the SDK!
 This repository contains the public FTC SDK for the DECODE (2025-2026) competition season.
 
 ## Welcome!

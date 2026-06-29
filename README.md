@@ -1,3 +1,5 @@
+# The Team Code is located [HERE](TeamCode/src/main/java/org/firstinspires/ftc/teamcode)
+
 ## NOTICE
 
 This is a fork of the FTC SDK, for the William Lyon Mackenzie C.I. FTC team. Please head [upstream](https://github.com/FIRST-Tech-Challenge/FtcRobotController) if you are looking for the SDK!

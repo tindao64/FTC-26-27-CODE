@@ -27,8 +27,8 @@ public class Constants {
             .leftRearMotorName("motorBL")
             .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .xVelocity(34.080957278)
-            .yVelocity(33.9289475442);
+            .xVelocity(32.2327889433)
+            .yVelocity(23.2810426079);
 
     public static TwoWheelConstants localizerConstants = new TwoWheelConstants()
             .forwardEncoder_HardwareMapName("forwardEncoder")

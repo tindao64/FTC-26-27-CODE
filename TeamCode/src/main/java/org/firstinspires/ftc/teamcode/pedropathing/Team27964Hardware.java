@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.pedroPathing;
+package org.firstinspires.ftc.teamcode.pedropathing;
 
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
@@ -12,17 +12,20 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-public class Constants {
-    public static FollowerConstants followerConstants = new FollowerConstants()
+class Team27964Hardware extends Hardware {
+    static {
+        HardwareManager.INSTANCE.registerHardware("Team 27964 Bot", Team27964Hardware::new);
+    }
+    public FollowerConstants followerConstants = new FollowerConstants()
             .mass(9.5)
             .headingPIDFCoefficients(new PIDFCoefficients(3, 0.1, 0.2, 0.05))
             .forwardZeroPowerAcceleration(-37.4507960114)
             .lateralZeroPowerAcceleration(-43.0960090531)
             .translationalPIDFCoefficients(new PIDFCoefficients(0.1, 0.0001, 0.005, 0.02));
 
-    public static PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
+    public PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
-    public static MecanumConstants driveConstants = new MecanumConstants()
+    public MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1)
             .rightFrontMotorName("motorFR")
             .rightRearMotorName("motorBR")
@@ -33,7 +36,7 @@ public class Constants {
             .xVelocity(32.2327889433)
             .yVelocity(23.2810426079);
 
-    public static TwoWheelConstants localizerConstants = new TwoWheelConstants()
+    public TwoWheelConstants localizerConstants = new TwoWheelConstants()
             .forwardEncoder_HardwareMapName("forwardEncoder")
             .strafeEncoder_HardwareMapName("strafeEncoder")
             .IMU_HardwareMapName("imu")
@@ -50,7 +53,8 @@ public class Constants {
             .forwardTicksToInches(0.00114746364)
             .strafeTicksToInches(0.00114746364);
 
-    public static Follower createFollower(HardwareMap hardwareMap) {
+    @Override
+    public Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
                 .pathConstraints(pathConstraints)
                 .mecanumDrivetrain(driveConstants)

@@ -9,6 +9,7 @@ import com.pedropathing.ftc.localization.Encoder;
 import com.pedropathing.ftc.localization.constants.TwoWheelConstants;
 import com.pedropathing.paths.PathConstraints;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -25,8 +26,11 @@ class Team27964Hardware extends Hardware {
 
     public PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
 
-    public MecanumConstants driveConstants = new MecanumConstants()
-            .maxPower(1)
+    public EncoderMecanumDrivetrain.Constants driveConstants = (EncoderMecanumDrivetrain.Constants) new EncoderMecanumDrivetrain.Constants()
+            .setRunMode(DcMotor.RunMode.RUN_USING_ENCODER)
+            .setMotorPIDFCoefficients(new com.qualcomm.robotcore.hardware.PIDFCoefficients(6.0, 6.0, 2.0, 0.0))
+            .setMotorPowerScaling(0.85)
+            .maxPower(1.0)
             .rightFrontMotorName("motorFR")
             .rightRearMotorName("motorBR")
             .leftFrontMotorName("motorFL")
@@ -57,7 +61,7 @@ class Team27964Hardware extends Hardware {
     public Follower createFollower(HardwareMap hardwareMap) {
         return new FollowerBuilder(followerConstants, hardwareMap)
                 .pathConstraints(pathConstraints)
-                .mecanumDrivetrain(driveConstants)
+                .setDrivetrain(new EncoderMecanumDrivetrain(hardwareMap, driveConstants))
                 .twoWheelLocalizer(localizerConstants)
                 .build();
     }

@@ -42,7 +42,7 @@ class Team27964Hardware extends Hardware {
             .IMU_HardwareMapName("imu")
             .IMU_Orientation(
                     new RevHubOrientationOnRobot(
-                            RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
+                            RevHubOrientationOnRobot.LogoFacingDirection.UP,
                             RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
                     )
             )

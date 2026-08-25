@@ -19,17 +19,18 @@ class Team27964Hardware extends Hardware {
     }
     public FollowerConstants followerConstants = new FollowerConstants()
             .mass(9.5)
-            .headingPIDFCoefficients(new PIDFCoefficients(3, 0.1, 0.2, 0.05))
+            .headingPIDFCoefficients(new PIDFCoefficients(2.0, 0.05, 0.1, 0.0))
             .forwardZeroPowerAcceleration(-37.4507960114)
             .lateralZeroPowerAcceleration(-43.0960090531)
-            .translationalPIDFCoefficients(new PIDFCoefficients(0.1, 0.0001, 0.005, 0.02));
+            .translationalPIDFCoefficients(new PIDFCoefficients(0.1, 0.0001, 0.01, 0.0));
 
-    public PathConstraints pathConstraints = new PathConstraints(0.99, 100, 1, 1);
+    public PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.75, 1);
 
     public EncoderMecanumDrivetrain.Constants driveConstants = (EncoderMecanumDrivetrain.Constants) new EncoderMecanumDrivetrain.Constants()
             .setRunMode(DcMotor.RunMode.RUN_USING_ENCODER)
             .setMotorPIDFCoefficients(new com.qualcomm.robotcore.hardware.PIDFCoefficients(6.0, 6.0, 2.0, 0.0))
-            .setMotorPowerScaling(0.85)
+            .setMotorPowerScaling(1.0)
+            .setMaxAcceleration(1.0)
             .maxPower(1.0)
             .rightFrontMotorName("motorFR")
             .rightRearMotorName("motorBR")

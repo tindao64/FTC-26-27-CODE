@@ -68,7 +68,7 @@ public class EncoderMecanumDrivetrain extends Mecanum {
     public void updateConstants() {
         super.updateConstants();
         for (DcMotorEx motor : getMotors()) {
-            motor.setPIDFCoefficients(constants.runMode, constants.motorPIDFCoefficients);
+            motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, constants.motorPIDFCoefficients);
             motor.setMode(constants.runMode);
         }
     }

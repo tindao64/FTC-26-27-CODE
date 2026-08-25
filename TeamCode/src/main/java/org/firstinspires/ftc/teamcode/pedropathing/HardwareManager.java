@@ -20,8 +20,7 @@ public enum HardwareManager {
     public static class SelectionOpMode extends LinearOpMode {
         @Override
         public void runOpMode() {
-            waitForStart();
-            INSTANCE.selectHardwareGamepad(gamepad1, telemetry, this::opModeIsActive);
+            INSTANCE.selectHardwareGamepad(gamepad1, telemetry, () -> this.opModeInInit() || this.opModeIsActive());
         }
     }
 

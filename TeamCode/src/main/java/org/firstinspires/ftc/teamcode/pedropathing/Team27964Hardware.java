@@ -20,8 +20,8 @@ class Team27964Hardware extends Hardware {
     public FollowerConstants followerConstants = new FollowerConstants()
             .mass(9.5)
             .headingPIDFCoefficients(new PIDFCoefficients(2.0, 0.05, 0.1, 0.0))
-            .forwardZeroPowerAcceleration(-37.4507960114)
-            .lateralZeroPowerAcceleration(-43.0960090531)
+            .forwardZeroPowerAcceleration(-35.8469744119)
+            .lateralZeroPowerAcceleration(-36.2191936259)
             .translationalPIDFCoefficients(new PIDFCoefficients(0.1, 0.0001, 0.01, 0.0));
 
     public PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.75, 1);

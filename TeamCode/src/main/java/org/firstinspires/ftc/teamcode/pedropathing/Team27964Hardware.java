@@ -38,8 +38,8 @@ class Team27964Hardware extends Hardware {
             .leftRearMotorName("motorBL")
             .leftFrontMotorDirection(DcMotorSimple.Direction.REVERSE)
             .leftRearMotorDirection(DcMotorSimple.Direction.REVERSE)
-            .xVelocity(32.2327889433)
-            .yVelocity(23.2810426079);
+            .xVelocity(30.557338823259926)
+            .yVelocity(25.005798396918625);
 
     public TwoWheelConstants localizerConstants = new TwoWheelConstants()
             .forwardEncoder_HardwareMapName("forwardEncoder")

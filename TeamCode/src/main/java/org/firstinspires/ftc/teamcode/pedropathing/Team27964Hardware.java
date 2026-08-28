@@ -19,7 +19,7 @@ class Team27964Hardware extends Hardware {
     }
     public FollowerConstants followerConstants = new FollowerConstants()
             .mass(9.5)
-            .headingPIDFCoefficients(new PIDFCoefficients(2.0, 0.05, 0.1, 0.0))
+            .headingPIDFCoefficients(new PIDFCoefficients(1.3, 0.05, 0.1, 0.0))
             .forwardZeroPowerAcceleration(-35.8469744119)
             .lateralZeroPowerAcceleration(-36.2191936259)
             .translationalPIDFCoefficients(new PIDFCoefficients(0.1, 0.0001, 0.01, 0.0));
@@ -53,8 +53,8 @@ class Team27964Hardware extends Hardware {
             )
             .forwardEncoderDirection(Encoder.REVERSE)
             .strafeEncoderDirection(Encoder.REVERSE)
-            .forwardPodY(-2.962232987691003)
-            .strafePodX(-9.362612399582233)
+            .forwardPodY(-2.95811)
+            .strafePodX(-10.90551)
             .forwardTicksToInches(0.00114746364)
             .strafeTicksToInches(0.00114746364);
 

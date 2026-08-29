@@ -141,6 +141,7 @@ public class Tuning extends SelectableOpMode {
  */
 class LocalizationTest extends OpMode {
     boolean debugStringEnabled = false;
+    final ElapsedTime elapsedTime = new ElapsedTime();
 
     @Override
     public void init() {
@@ -168,6 +169,7 @@ class LocalizationTest extends OpMode {
     public void start() {
         follower.startTeleopDrive();
         follower.update();
+        elapsedTime.reset();
     }
 
     /**
@@ -176,6 +178,9 @@ class LocalizationTest extends OpMode {
      */
     @Override
     public void loop() {
+        int loopTimeMs = (int)elapsedTime.milliseconds();
+        elapsedTime.reset();
+
         if (gamepad1.aWasPressed() || gamepad2.aWasPressed()) {
             debugStringEnabled = !debugStringEnabled;
         }
@@ -183,6 +188,7 @@ class LocalizationTest extends OpMode {
         follower.setTeleOpDrive(-gamepad1.left_stick_y, -gamepad1.left_stick_x, -gamepad1.right_stick_x, true);
         follower.update();
 
+        telemetryM.addData("Loop Time (ms)", loopTimeMs);
         telemetryM.debug("x:" + follower.getPose().getX());
         telemetryM.debug("y:" + follower.getPose().getY());
         telemetryM.debug("heading:" + follower.getPose().getHeading());

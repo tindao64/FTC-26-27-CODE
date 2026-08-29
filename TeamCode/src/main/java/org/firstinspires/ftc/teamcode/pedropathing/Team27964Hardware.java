@@ -51,12 +51,12 @@ class Team27964Hardware extends Hardware {
                             RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
                     )
             )
-            .forwardTicksToInches(0.00114746364)
-            .strafeTicksToInches(0.00114746364);
             .forwardEncoderDirection(Encoder.FORWARD)
             .strafeEncoderDirection(Encoder.FORWARD)
             .forwardPodY(2.713749533404666)
             .strafePodX(-11.011891248590807)
+            .forwardTicksToInches(0.00112711963)
+            .strafeTicksToInches(0.00112711963);
 
     @Override
     public Follower createFollower(HardwareMap hardwareMap) {

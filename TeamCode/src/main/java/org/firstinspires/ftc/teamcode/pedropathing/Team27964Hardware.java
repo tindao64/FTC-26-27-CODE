@@ -42,8 +42,8 @@ class Team27964Hardware extends Hardware {
             .yVelocity(25.005798396918625);
 
     public TwoWheelConstants localizerConstants = new TwoWheelConstants()
-            .forwardEncoder_HardwareMapName("forwardEncoder")
-            .strafeEncoder_HardwareMapName("strafeEncoder")
+            .forwardEncoder_HardwareMapName("motorBL")
+            .strafeEncoder_HardwareMapName("motorFL")
             .IMU_HardwareMapName("imu")
             .IMU_Orientation(
                     new RevHubOrientationOnRobot(
@@ -51,12 +51,12 @@ class Team27964Hardware extends Hardware {
                             RevHubOrientationOnRobot.UsbFacingDirection.RIGHT
                     )
             )
-            .forwardEncoderDirection(Encoder.REVERSE)
-            .strafeEncoderDirection(Encoder.REVERSE)
-            .forwardPodY(-2.95811)
-            .strafePodX(-10.90551)
             .forwardTicksToInches(0.00114746364)
             .strafeTicksToInches(0.00114746364);
+            .forwardEncoderDirection(Encoder.FORWARD)
+            .strafeEncoderDirection(Encoder.FORWARD)
+            .forwardPodY(2.713749533404666)
+            .strafePodX(-11.011891248590807)
 
     @Override
     public Follower createFollower(HardwareMap hardwareMap) {

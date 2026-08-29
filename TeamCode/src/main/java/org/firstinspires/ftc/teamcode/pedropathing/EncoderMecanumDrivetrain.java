@@ -46,7 +46,7 @@ public class EncoderMecanumDrivetrain extends Mecanum {
         }
     }
 
-    public Constants constants;
+    public Constants constants, prevConstants;
 
     private final ElapsedTime deltaTime = new ElapsedTime();
 
@@ -55,6 +55,9 @@ public class EncoderMecanumDrivetrain extends Mecanum {
     public EncoderMecanumDrivetrain(HardwareMap hardwareMap, Constants constants) {
         super(hardwareMap, constants);
         this.constants = constants;
+        this.prevConstants = new Constants();
+
+        updateConstants();
 
         deltaTime.reset();
     }
@@ -62,9 +65,15 @@ public class EncoderMecanumDrivetrain extends Mecanum {
     @Override
     public void updateConstants() {
         super.updateConstants();
-        for (DcMotorEx motor : getMotors()) {
-            motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, constants.motorPIDFCoefficients);
-            motor.setMode(constants.runMode);
+
+        if (!constants.motorPIDFCoefficients.equals(prevConstants.motorPIDFCoefficients)
+         || !constants.runMode.equals(prevConstants.runMode)) {
+            prevConstants.motorPIDFCoefficients = constants.motorPIDFCoefficients;
+            prevConstants.runMode = constants.runMode;
+            for (DcMotorEx motor : getMotors()) {
+                motor.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, constants.motorPIDFCoefficients);
+                motor.setMode(constants.runMode);
+            }
         }
     }
 
@@ -85,8 +94,8 @@ public class EncoderMecanumDrivetrain extends Mecanum {
 
             // Clamp power delta, but allow stopping/small braking
             // This is to allow for faster stopping and predictive braking
-            if (Math.abs(drivePowers[i]) > 0.2
-             && Math.abs(drivePowers[i] - prevMotorDrive[i]) > maxAllowedPowerChange) {
+            if (/*Math.abs(drivePowers[i]) > 0.25
+             && */Math.abs(drivePowers[i] - prevMotorDrive[i]) > maxAllowedPowerChange) {
                 drivePowers[i] = prevMotorDrive[i] + Math.signum(drivePowers[i] - prevMotorDrive[i]) * maxAllowedPowerChange;
             }
         }

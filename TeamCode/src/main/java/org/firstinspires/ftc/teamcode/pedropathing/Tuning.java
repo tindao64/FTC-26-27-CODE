@@ -98,6 +98,8 @@ public class Tuning extends SelectableOpMode {
             follower = HardwareManager.INSTANCE.createFollower(hardwareMap);
         }
 
+        Drawing.init();
+
         follower.setStartingPose(new Pose());
 
         poseHistory = follower.getPoseHistory();
@@ -1666,7 +1668,9 @@ class OffsetsTuner extends OpMode {
  */
 class Drawing {
     public static final double ROBOT_RADIUS = 9; // woah
+    public static final double UPDATE_RATE = 100; // ms per update
     private static final FieldManager panelsField = PanelsField.INSTANCE.getField();
+    private static final ElapsedTime updateTimer = new ElapsedTime(); // for update throttling
 
     private static final Style robotLook = new Style(
             "", "#3F51B5", 0.75
@@ -1800,6 +1804,12 @@ class Drawing {
      * This tries to send the current packet to FTControl Panels.
      */
     public static void sendPacket() {
+        double msNow = updateTimer.milliseconds();
+        if (msNow < UPDATE_RATE) {
+            return;
+        }
+
+        updateTimer.reset();
         panelsField.update();
     }
 }

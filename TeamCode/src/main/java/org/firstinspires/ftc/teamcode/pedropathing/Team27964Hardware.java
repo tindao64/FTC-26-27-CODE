@@ -24,7 +24,7 @@ class Team27964Hardware extends Hardware {
             .lateralZeroPowerAcceleration(-36.2191936259)
             .translationalPIDFCoefficients(new PIDFCoefficients(0.1, 0.0001, 0.01, 0.01));
 
-    public PathConstraints pathConstraints = new PathConstraints(0.99, 100, 0.75, 1);
+    public PathConstraints pathConstraints = new PathConstraints(0.99, 200, 0.75, 1);
 
     public MecanumConstants driveConstants = new MecanumConstants()
             .maxPower(1.0)

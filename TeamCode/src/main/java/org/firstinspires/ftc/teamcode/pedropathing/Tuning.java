@@ -101,6 +101,8 @@ public class Tuning extends SelectableOpMode {
         Drawing.init();
 
         follower.setStartingPose(new Pose());
+        follower.update();
+        follower.setPose(new Pose());
 
         poseHistory = follower.getPoseHistory();
 

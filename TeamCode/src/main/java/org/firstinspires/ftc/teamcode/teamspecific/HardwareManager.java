@@ -16,6 +16,10 @@ public enum HardwareManager {
     private final TreeMap<String, Supplier<Hardware>> hardwareTypes = new TreeMap<>();
     private Hardware hardware = null;
 
+    public boolean hasSelectedHardware() {
+        return hardware != null;
+    }
+
     @Autonomous(name="Select Team")
     public static class SelectionOpMode extends LinearOpMode {
         @Override
@@ -78,8 +82,8 @@ public enum HardwareManager {
     }
 
     public Follower createFollower(HardwareMap hardwareMap) {
-        if (hardware == null) {
-            throw new IllegalStateException("Hardware is null");
+        if (!hasSelectedHardware()) {
+            throw new IllegalStateException("Hardware not selected!");
         }
 
         return hardware.createFollower(hardwareMap);

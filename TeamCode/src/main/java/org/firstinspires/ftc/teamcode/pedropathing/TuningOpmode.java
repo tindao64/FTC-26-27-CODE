@@ -28,7 +28,7 @@ public class TuningOpmode extends OpMode {
         tuning.gamepad2 = gamepad2;
         tuning.telemetry = telemetry;
         tuning.hardwareMap = hardwareMap;
-
+        //Encoders now run a lot faster
         // Set up bulk reading
         allHubs = hardwareMap.getAll(LynxModule.class);
         for (LynxModule hub : allHubs) {

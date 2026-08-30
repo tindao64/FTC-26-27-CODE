@@ -42,7 +42,7 @@ public class SqaureTest extends FollowerLinearOpMode {
                     .setTangentHeadingInterpolation()
                     .build();
             waitForStart();
-        follower.followPath(pathChain);
+        follower.followPath(MainChain);
 
         while (follower.isBusy() && opModeIsActive()) {
             follower.update();

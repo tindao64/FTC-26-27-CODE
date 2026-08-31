@@ -14,11 +14,9 @@ import java.lang.Math;
 public class PathFollowingTest extends FollowerLinearOpMode {
     @Override
     public void runOpMode() {
-        //Must call for paths
         initFollowerOpMode();
 
-        Pose startingPose = new Pose(36, 60, Math.toRadians(90));
-        follower.setStartingPose(startingPose);
+        follower.setStartingPose(new Pose(36, 60, Math.toRadians(90)));
 
         PathChain pathChain = follower.pathBuilder()
                 .addPath(
@@ -52,7 +50,7 @@ public class PathFollowingTest extends FollowerLinearOpMode {
         follower.followPath(pathChain);
 
         while (follower.isBusy() && opModeIsActive()) {
-            follower.update();
+            updateFollower();
         }
     }
 }

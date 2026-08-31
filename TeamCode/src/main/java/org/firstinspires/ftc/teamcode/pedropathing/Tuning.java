@@ -1670,7 +1670,7 @@ class OffsetsTuner extends OpMode {
  */
 class Drawing {
     public static final double ROBOT_RADIUS = 9; // woah
-    public static final double UPDATE_RATE = 100; // ms per update
+    public static final double UPDATE_RATE = 250; // ms per update
     private static final FieldManager panelsField = PanelsField.INSTANCE.getField();
     private static final ElapsedTime updateTimer = new ElapsedTime(); // for update throttling
 

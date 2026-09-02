@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.vision.VisionPortal;
 
 import java.util.Objects;
 import java.util.TreeMap;
@@ -87,5 +88,13 @@ public enum HardwareManager {
         }
 
         return hardware.createFollower(hardwareMap);
+    }
+
+    public VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
+        if (!hasSelectedHardware()) {
+            throw new IllegalStateException("Hardware not selected!");
+        }
+
+        return hardware.createVisionPortalBuilder(hardwareMap);
     }
 }

@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.teamspecific;
 
+import android.util.Size;
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.follower.FollowerConstants;
@@ -11,6 +12,8 @@ import com.pedropathing.paths.PathConstraints;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.vision.VisionPortal;
 
 class Team27964Hardware extends Hardware {
     static {
@@ -60,5 +63,13 @@ class Team27964Hardware extends Hardware {
                 .mecanumDrivetrain(driveConstants)
                 .twoWheelLocalizer(localizerConstants)
                 .build();
+    }
+
+    @Override
+    public VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
+        return new VisionPortal.Builder()
+                .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
+                .setCameraResolution(new Size(320, 240))
+                .setStreamFormat(VisionPortal.StreamFormat.MJPEG);
     }
 }

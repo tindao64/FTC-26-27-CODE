@@ -9,12 +9,10 @@ buildscript {
         mavenCentral()
         google()
     }
-}
-
-plugins {
-    // Note for FTC Teams: Do not modify this yourself.
-    id 'com.android.application' version '8.13.2' apply false
-    id 'com.android.library' version '8.13.2' apply false
+    dependencies {
+        // Note for FTC Teams: Do not modify this yourself.
+        classpath 'com.android.tools.build:gradle:8.7.0'
+    }
 }
 ext {
     compileSdkVersion = 34

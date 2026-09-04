@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.teamspecific;
 
+import android.graphics.Color;
 import android.util.Size;
 import com.pedropathing.control.PIDFCoefficients;
 import com.pedropathing.follower.Follower;
@@ -13,7 +14,12 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.vision.Vision;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
+import org.firstinspires.ftc.vision.opencv.ColorRange;
+import org.firstinspires.ftc.vision.opencv.ColorSpace;
+import org.opencv.core.Scalar;
 
 class Team27964Hardware extends Hardware {
     static {
@@ -65,11 +71,59 @@ class Team27964Hardware extends Hardware {
                 .build();
     }
 
-    @Override
-    public VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
+    public static final Size CAMERA_SIZE = new Size(320, 240);
+    private VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
         return new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
-                .setCameraResolution(new Size(320, 240))
+                .setCameraResolution(CAMERA_SIZE)
                 .setStreamFormat(VisionPortal.StreamFormat.MJPEG);
+    }
+
+    private ColorBlobLocatorProcessor createBlobProcessor() {
+        ColorBlobLocatorProcessor colorBlobProcessor = new ColorBlobLocatorProcessor.Builder()
+                .setTargetColorRange(
+                        new ColorRange(
+                                ColorSpace.HSV,
+                                new Scalar(25, 100, 100),   // HSV Low
+                                new Scalar(35, 255, 255)    // HSV High
+                        )
+                )
+                .setContourMode(ColorBlobLocatorProcessor.ContourMode.EXTERNAL_ONLY)
+                .setDrawContours(true)
+                .setBoxFitColor(0)
+                .setCircleFitColor(Color.rgb(0, 255, 0))
+                .setBlurSize(5)
+                .setDilateSize(15)
+                .setErodeSize(15)
+                .setMorphOperationType(ColorBlobLocatorProcessor.MorphOperationType.CLOSING)
+                .build();
+
+        // TODO!!: Lazy application of blob filters only on request. Benchmark?
+
+        // Removes small or enormous blobs
+        colorBlobProcessor.addFilter(new ColorBlobLocatorProcessor.BlobFilter(
+                ColorBlobLocatorProcessor.BlobCriteria.BY_CONTOUR_AREA,
+                50,
+                20000
+        ));
+
+        // Removes non-circular blobs
+        colorBlobProcessor.addFilter(new ColorBlobLocatorProcessor.BlobFilter(
+                ColorBlobLocatorProcessor.BlobCriteria.BY_CIRCULARITY,
+                0.6,
+                1.0
+        ));
+
+        return colorBlobProcessor;
+    }
+
+    @Override
+    public Vision createVision(HardwareMap hardwareMap) {
+        ColorBlobLocatorProcessor colorBlobProcessor = createBlobProcessor();
+        VisionPortal visionPortal = createVisionPortalBuilder(hardwareMap)
+                .addProcessors(colorBlobProcessor)
+                .build();
+
+        return new Vision(visionPortal, colorBlobProcessor, CAMERA_SIZE);
     }
 }

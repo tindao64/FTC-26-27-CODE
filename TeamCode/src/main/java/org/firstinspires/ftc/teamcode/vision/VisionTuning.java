@@ -5,6 +5,7 @@ import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import static org.firstinspires.ftc.teamcode.OpModeHelper.*;
 import org.firstinspires.ftc.teamcode.teamspecific.HardwareManager;
 import org.firstinspires.ftc.vision.opencv.Circle;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
@@ -16,14 +17,9 @@ import java.util.List;
 public class VisionTuning extends LinearOpMode {
     @Override
     public void runOpMode() {
-        // Set up combined telemetry, to also show on panels
-        telemetry = new JoinedTelemetry(PanelsTelemetry.INSTANCE.getFtcTelemetry(), telemetry);
-
+        setupPanels(this);
         // This is the Vision that contains all the computer vision things
-        Vision vision = HardwareManager.INSTANCE.createVision(hardwareMap);
-
-        // Set up the Panels camera feed
-        PanelsCameraStream.INSTANCE.startStream(vision.visionPortal, 5);
+        Vision vision = createVision(hardwareMap);
 
         // Loop while active
         while (opModeInInit() || opModeIsActive()) {
@@ -47,7 +43,6 @@ public class VisionTuning extends LinearOpMode {
         }
 
         // clean up
-        vision.visionPortal.resumeLiveView();
-        PanelsCameraStream.INSTANCE.stopStream();
+        destroyVision(vision);
     }
 }

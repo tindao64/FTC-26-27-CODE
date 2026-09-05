@@ -9,19 +9,19 @@ import org.opencv.core.Point;
 public class Vision {
     /**
      * The VisionPortal.
-     *
+     * <p>
      * This is the manager of all the vision processors below, asynchronously feeding them
      * camera frames. Use this to manage the camera's state, and to start/stop
      * "streaming" the camera feed to the processors. This by itself does no processing,
      * all actual computer vision happens in processors.
-     *
+     * <p>
      * There is no manual "update" required with the portal or its processors, as there is
      * with a Follower. Everything happens asynchronously in a separate thread (i.e. on
      * its own, don't worry about it).
      */
     public final VisionPortal visionPortal;
 
-    /**
+    /*
      * Here are the individual vision processors. Query these to get results.
      */
 
@@ -33,7 +33,7 @@ public class Vision {
 
     /**
      * Normalizes pixel-based coordinates to a 0.0-1.0 based coordinate system.
-     *
+     * <p>
      * This is to decouple the camera resolution from the user code, such that if one changes
      * the other does not break.
      *

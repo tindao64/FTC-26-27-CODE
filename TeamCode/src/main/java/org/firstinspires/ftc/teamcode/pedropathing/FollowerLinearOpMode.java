@@ -1,34 +1,25 @@
 package org.firstinspires.ftc.teamcode.pedropathing;
 
-import com.bylazar.telemetry.JoinedTelemetry;
-import com.bylazar.telemetry.PanelsTelemetry;
 import com.pedropathing.follower.Follower;
-import com.pedropathing.geometry.Pose;
-import com.qualcomm.hardware.lynx.LynxModule;
-import org.firstinspires.ftc.teamcode.teamspecific.HardwareManager;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public abstract class FollowerLinearOpMode extends BulkReadingLinearOpMode {
+import static org.firstinspires.ftc.teamcode.OpModeHelper.*;
+
+public abstract class FollowerLinearOpMode extends LinearOpMode {
     public Follower follower;
+    private final BulkReadingHelper bulkReader = new BulkReadingHelper();
 
     /**
      * MUST call this in init()
      */
     protected final void initFollowerOpMode() {
-         // Setup telemetry
-         telemetry = new JoinedTelemetry(telemetry, PanelsTelemetry.INSTANCE.getFtcTelemetry());
-
-         setupBulkReading();
-
-         follower = HardwareManager.INSTANCE.createFollower(hardwareMap);
-
-         // reset position hack
-         follower.setStartingPose(new Pose());
-         follower.update();
-         follower.setPose(new Pose());
+         setupPanels(this);
+         bulkReader.initBulkReading(hardwareMap);
+         follower = createFollower(hardwareMap);
     }
 
     protected final void updateFollower() {
-        updateBulkReadCache();
+        bulkReader.flushBulkReadCache();
         follower.update();
     }
 }

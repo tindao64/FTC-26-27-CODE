@@ -1,21 +1,21 @@
 package org.firstinspires.ftc.teamcode.pedropathing;
 
-import com.qualcomm.hardware.lynx.LynxModule;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
-import java.util.List;
+import static org.firstinspires.ftc.teamcode.OpModeHelper.*;
 
 /**
  * A little hacky wrapper class around Tuning to do bulk reading
  */
 @TeleOp(name = "Pedro Pathing Tuning", group = "Tuning")
-public class TuningOpmode extends BulkReadingLinearOpMode {
+public class TuningOpMode extends LinearOpMode {
     private final Tuning tuning = new Tuning();
 
     @Override
     public void runOpMode() {
-        setupBulkReading();
+        setupPanels(this);
+        BulkReadingHelper bulkReader = new BulkReadingHelper();
+        bulkReader.initBulkReading(hardwareMap);
 
         // Transfer our hardware
         tuning.gamepad1 = gamepad1;
@@ -25,16 +25,16 @@ public class TuningOpmode extends BulkReadingLinearOpMode {
 
         tuning.init();
         while (opModeInInit()) {
-            updateBulkReadCache();
+            bulkReader.flushBulkReadCache();
             tuning.init_loop();
             telemetry.update();
         }
         // to check if you pressed START instead of STOP
         if (opModeIsActive()) {
-            updateBulkReadCache();
+            bulkReader.flushBulkReadCache();
             tuning.start();
             while (opModeIsActive()) {
-                updateBulkReadCache();
+                bulkReader.flushBulkReadCache();
                 tuning.loop();
                 telemetry.update();
             }

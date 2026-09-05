@@ -71,8 +71,9 @@ public enum HardwareManager {
             }
 
             if (gamepad.rightBumperWasPressed()) {
-                assert hardwareTypes.containsKey(entry);
-                hardware = hardwareTypes.get(entry).get();
+                Supplier<Hardware> hardwareSupplier = hardwareTypes.get(entry);
+                assert hardwareSupplier != null;
+                hardware = hardwareSupplier.get();
                 assert hardware != null;
                 break;
             }

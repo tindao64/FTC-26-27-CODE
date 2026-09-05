@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.OpModeHelper;
 import org.firstinspires.ftc.teamcode.vision.Vision;
 
 import java.util.Objects;
@@ -25,6 +26,7 @@ public enum HardwareManager {
     public static class SelectionOpMode extends LinearOpMode {
         @Override
         public void runOpMode() {
+            OpModeHelper.combinePanelsTelemetry(this);
             INSTANCE.selectHardwareGamepad(gamepad1, telemetry, () -> this.opModeInInit() || this.opModeIsActive());
         }
     }

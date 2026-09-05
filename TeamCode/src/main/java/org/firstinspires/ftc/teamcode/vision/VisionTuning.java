@@ -17,7 +17,7 @@ import java.util.List;
 public class VisionTuning extends LinearOpMode {
     @Override
     public void runOpMode() {
-        setupPanels(this);
+        combinePanelsTelemetry(this);
         // This is the Vision that contains all the computer vision things
         Vision vision = createVision(hardwareMap);
 

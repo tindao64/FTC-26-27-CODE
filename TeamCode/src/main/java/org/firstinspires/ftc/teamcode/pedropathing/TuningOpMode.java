@@ -13,7 +13,7 @@ public class TuningOpMode extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        setupPanels(this);
+        combinePanelsTelemetry(this);
         BulkReadingHelper bulkReader = new BulkReadingHelper();
         bulkReader.initBulkReading(hardwareMap);
 

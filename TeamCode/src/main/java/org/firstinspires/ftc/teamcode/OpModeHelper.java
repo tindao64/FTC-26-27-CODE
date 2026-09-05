@@ -8,6 +8,7 @@ import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.teamspecific.Hardware;
 import org.firstinspires.ftc.teamcode.teamspecific.HardwareManager;
@@ -64,20 +65,6 @@ public class OpModeHelper {
     }
 
     /**
-     * A helper function to set up combined panels gamepads for your
-     * OpMode.
-     * <p>
-     * Panels has a "Gamepad" widget that allows you to have virtual
-     * gamepads on your computer, but you need to set it up first.
-     * @param opMode your OpMode
-     */
-    public static void combinePanelsGamepads(OpMode opMode) {
-        // fix "non-atomic operation" warning?
-        opMode.gamepad1 = PanelsGamepad.INSTANCE.getFirstManager().asCombinedFTCGamepad(opMode.gamepad1);
-        opMode.gamepad2 = PanelsGamepad.INSTANCE.getSecondManager().asCombinedFTCGamepad(opMode.gamepad2);
-    }
-
-    /**
      * A helper function to have telemetry on both Panels and on the
      * Driver Station.
      * <p>
@@ -88,15 +75,6 @@ public class OpModeHelper {
      */
     public static void combinePanelsTelemetry(OpMode opMode) {
         opMode.telemetry = new JoinedTelemetry(PanelsTelemetry.INSTANCE.getFtcTelemetry(), opMode.telemetry);
-    }
-
-
-    /**
-     * sets up all panels things
-     */
-    public static void setupPanels(OpMode opMode) {
-        combinePanelsTelemetry(opMode);
-        combinePanelsGamepads(opMode);
     }
 
     /**

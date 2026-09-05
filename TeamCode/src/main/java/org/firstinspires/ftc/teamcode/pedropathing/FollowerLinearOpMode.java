@@ -13,7 +13,7 @@ public abstract class FollowerLinearOpMode extends LinearOpMode {
      * MUST call this in init()
      */
     protected final void initFollowerOpMode() {
-         setupPanels(this);
+         combinePanelsTelemetry(this);
          bulkReader.initBulkReading(hardwareMap);
          follower = createFollower(hardwareMap);
     }

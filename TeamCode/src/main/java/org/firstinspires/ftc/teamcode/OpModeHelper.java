@@ -1,16 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.bylazar.camerastream.PanelsCameraStream;
-import com.bylazar.gamepad.PanelsGamepad;
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.lynx.LynxModule;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.teamspecific.Hardware;
 import org.firstinspires.ftc.teamcode.teamspecific.HardwareManager;
 import org.firstinspires.ftc.teamcode.vision.Vision;
 

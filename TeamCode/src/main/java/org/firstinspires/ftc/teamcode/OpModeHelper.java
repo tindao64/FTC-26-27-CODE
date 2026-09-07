@@ -140,7 +140,7 @@ import static org.firstinspires.ftc.teamcode.OpModeHelper.*
 public class MyOpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
-        setupPanels(this);
+        combinePanelsTelemetry(this);
 
         BulkReadingHelper bulkReader = new BulkReadingHelper();
         bulkReader.initBulkReading(hardwareMap);

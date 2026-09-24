@@ -1,4 +1,7 @@
-package org.firstinspires.ftc.teamcode.pedropathing;
+package org.firstinspires.ftc.teamcode.pedroPathing;
+
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.bylazar.telemetry.JoinedTelemetry;
 import com.bylazar.telemetry.PanelsTelemetry;
@@ -7,7 +10,7 @@ import com.pedropathing.geometry.Pose;
 import com.qualcomm.hardware.lynx.LynxModule;
 import org.firstinspires.ftc.teamcode.teamspecific.HardwareManager;
 
-public abstract class FollowerLinearOpMode extends BulkReadingLinearOpMode {
+public abstract class FollowerLinearOpMode extends org.firstinspires.ftc.teamcode.pedroPathing.BulkReadingLinearOpMode {
     public Follower follower;
 
     /**
@@ -31,5 +34,7 @@ public abstract class FollowerLinearOpMode extends BulkReadingLinearOpMode {
         updateBulkReadCache();
         follower.update();
     }
+
+    public abstract void runOpMode() throws InterruptedException;
 }
 

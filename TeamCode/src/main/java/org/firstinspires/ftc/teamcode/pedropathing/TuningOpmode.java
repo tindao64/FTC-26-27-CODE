@@ -10,8 +10,8 @@ import java.util.List;
  * A little hacky wrapper class around Tuning to do bulk reading
  */
 @TeleOp(name = "Pedro Pathing Tuning", group = "Tuning")
-public class TuningOpmode extends BulkReadingLinearOpMode {
-    private final Tuning tuning = new Tuning();
+public class TuningOpmode extends org.firstinspires.ftc.teamcode.pedropathing.BulkReadingLinearOpMode {
+    private final org.firstinspires.ftc.teamcode.pedropathing.Tuning tuning = new org.firstinspires.ftc.teamcode.pedropathing.Tuning();
 
     @Override
     public void runOpMode() {

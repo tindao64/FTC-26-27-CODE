@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode.vision;
 
 import android.util.Size;
-import com.bylazar.camerastream.PanelsCameraStream;
+
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
 import org.opencv.core.Point;
+
+import java.util.List;
 
 public class Vision {
     /**
@@ -29,6 +33,7 @@ public class Vision {
      * The ColorBlobLocatorProcessor finds blobs of a certain color, in this case, it
      * will find circular blobs of yellow on the camera stream, which are likely balls.
      */
+    public AprilTagProcessor tagDetector = null;
     public final ColorBlobLocatorProcessor colorBlobProcessor;
 
     /**
@@ -51,15 +56,16 @@ public class Vision {
 
 
 
+
     /**********************************************
      * Implementation
      * Not very important unless you're adding another processor.
      *********************************************/
     private final Size cameraSize;
-    public Vision(VisionPortal visionPortal, ColorBlobLocatorProcessor colorBlobProcessor, Size cameraSize) {
+    public Vision(VisionPortal visionPortal, AprilTagProcessor tagDetector, ColorBlobLocatorProcessor colorBlobProcessor, Size cameraSize) {
         this.visionPortal = visionPortal;
         this.colorBlobProcessor = colorBlobProcessor;
-
+        this.tagDetector = tagDetector;
         this.cameraSize = cameraSize;
     }
 }

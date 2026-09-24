@@ -16,6 +16,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.vision.Vision;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorRange;
 import org.firstinspires.ftc.vision.opencv.ColorSpace;
@@ -120,10 +121,11 @@ class Team27964Hardware extends Hardware {
     @Override
     public Vision createVision(HardwareMap hardwareMap) {
         ColorBlobLocatorProcessor colorBlobProcessor = createBlobProcessor();
+        AprilTagProcessor tagDetector = new AprilTagProcessor.Builder().build();
         VisionPortal visionPortal = createVisionPortalBuilder(hardwareMap)
                 .addProcessors(colorBlobProcessor)
                 .build();
 
-        return new Vision(visionPortal, colorBlobProcessor, CAMERA_SIZE);
+        return new Vision(visionPortal, tagDetector, colorBlobProcessor, CAMERA_SIZE);
     }
 }

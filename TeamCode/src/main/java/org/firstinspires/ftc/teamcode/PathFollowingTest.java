@@ -1,11 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+import static org.firstinspires.ftc.teamcode.pedropathing.Tuning.follower;
+
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.BezierCurve;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathChain;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import org.firstinspires.ftc.teamcode.pedropathing.FollowerLinearOpMode;
+import org.firstinspires.ftc.teamcode.pedroPathing.FollowerLinearOpMode;
 import org.firstinspires.ftc.teamcode.teamspecific.HardwareManager;
 
 import java.lang.Math;

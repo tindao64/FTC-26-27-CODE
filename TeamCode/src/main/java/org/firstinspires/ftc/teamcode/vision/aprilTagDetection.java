@@ -45,6 +45,7 @@ public class aprilTagDetection {
         }
         return null;
     }
+    //If this returns true, then the april tag is in the correct orientation to shoot.
     public boolean AprilTagUp(){
         return TagIsUp;
         }

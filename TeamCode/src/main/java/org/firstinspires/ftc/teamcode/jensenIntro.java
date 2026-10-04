@@ -12,8 +12,7 @@ public class jensenIntro extends LinearOpMode{
     Servo servo1;
     CRServo servo2;
     public void runOpMode() throws InterruptedException {
-
-
+        float motorPower = gamepad1.left_stick_x;
         servo1 = hardwareMap.get(Servo.class, "hardwaremapname");
         servo2 = hardwareMap.get(CRServo.class,"67");
         lbMotor = hardwareMap.get(DcMotor.class,  "lbMotor");

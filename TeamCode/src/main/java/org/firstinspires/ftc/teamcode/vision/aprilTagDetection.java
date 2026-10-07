@@ -14,9 +14,9 @@ public class aprilTagDetection {
     Vision vision = HardwareManager.INSTANCE.createVision(hardwareMap);
     boolean TagIsUp;
 
-    public List<AprilTagDetection> getTags() { return vision.tagDetector.getDetections(); }
+    public List<AprilTagDetection> getTags() { return vision.tagDetector.getDetections();}
     public AprilTagDetection getTag(int id) {
-        for (AprilTagDetection detection : currentDetections) {
+        for (AprilTagDetection detection : getTags()) {
             if (detection instanceof AprilTagSingleDetection) {
                 AprilTagSingleDetection singleDet = (AprilTagSingleDetection) detection;
                 if (singleDet.metadata != null) {

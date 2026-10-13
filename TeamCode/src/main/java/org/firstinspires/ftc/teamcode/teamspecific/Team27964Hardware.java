@@ -108,13 +108,6 @@ class Team27964Hardware extends Hardware {
                 20000
         ));
 
-        // Removes non-circular blobs
-        colorBlobProcessor.addFilter(new ColorBlobLocatorProcessor.BlobFilter(
-                ColorBlobLocatorProcessor.BlobCriteria.BY_CIRCULARITY,
-                0.6,
-                1.0
-        ));
-
         return colorBlobProcessor;
     }
 

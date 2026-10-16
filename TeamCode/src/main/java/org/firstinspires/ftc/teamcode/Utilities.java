@@ -20,4 +20,17 @@ public class Utilities {
     {
         return new YawPitchRollAngles(AngleUnit.DEGREES,a.getYaw(AngleUnit.DEGREES) + b.getYaw(AngleUnit.DEGREES),a.getPitch(AngleUnit.DEGREES) + b.getPitch(AngleUnit.DEGREES),a.getRoll(AngleUnit.DEGREES) + b.getRoll(AngleUnit.DEGREES),Math.max(a.getAcquisitionTime(),b.getAcquisitionTime()));
     }
+    public static Pose3D sub(Pose3D a, Pose3D b)
+    {
+        return new Pose3D(sub(a.getPosition(),b.getPosition()),sub(a.getOrientation(),b.getOrientation()));
+    }
+    public static Position sub(Position a, Position b)
+    {
+        Position unitadjustedb = b.toUnit(a.unit);
+        return new Position(a.unit,a.x - unitadjustedb.x,a.y - unitadjustedb.y,a.z - unitadjustedb.z,Math.max(a.acquisitionTime,b.acquisitionTime));
+    }
+    public static YawPitchRollAngles sub(YawPitchRollAngles a, YawPitchRollAngles b)
+    {
+        return new YawPitchRollAngles(AngleUnit.DEGREES,a.getYaw(AngleUnit.DEGREES) - b.getYaw(AngleUnit.DEGREES),a.getPitch(AngleUnit.DEGREES) - b.getPitch(AngleUnit.DEGREES),a.getRoll(AngleUnit.DEGREES) - b.getRoll(AngleUnit.DEGREES),Math.max(a.getAcquisitionTime(),b.getAcquisitionTime()));
+    }
 }

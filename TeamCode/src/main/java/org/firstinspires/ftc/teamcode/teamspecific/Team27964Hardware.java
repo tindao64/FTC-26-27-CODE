@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.teamspecific;
 
+import static org.firstinspires.ftc.teamcode.Utilities.add;
+
 import android.graphics.Color;
 import android.util.Size;
 import com.pedropathing.control.PIDFCoefficients;
@@ -9,11 +11,17 @@ import com.pedropathing.ftc.FollowerBuilder;
 import com.pedropathing.ftc.drivetrains.MecanumConstants;
 import com.pedropathing.ftc.localization.Encoder;
 import com.pedropathing.ftc.localization.constants.TwoWheelConstants;
+import com.pedropathing.geometry.Pose;
 import com.pedropathing.paths.PathConstraints;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
+import org.firstinspires.ftc.robotcore.external.navigation.Position;
+import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.vision.Vision;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
@@ -22,7 +30,14 @@ import org.firstinspires.ftc.vision.opencv.ColorSpace;
 import org.opencv.core.Scalar;
 
 class Team27964Hardware extends Hardware {
+
+
     static {
+        // TODO Add real offset values for team 27964
+        CameraMountingPose = new Pose3D(
+                new Position(DistanceUnit.CM,0,0,0,0),
+                new YawPitchRollAngles(AngleUnit.DEGREES,0,0,0,0)
+        );
         HardwareManager.INSTANCE.registerHardware("Team 27964 Bot", Team27964Hardware::new);
     }
     public FollowerConstants followerConstants = new FollowerConstants()

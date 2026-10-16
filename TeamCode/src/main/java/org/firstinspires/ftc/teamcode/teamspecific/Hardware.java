@@ -1,7 +1,13 @@
 package org.firstinspires.ftc.teamcode.teamspecific;
 
+import static org.firstinspires.ftc.teamcode.Utilities.add;
+import static org.firstinspires.ftc.teamcode.Utilities.sub;
+
 import com.pedropathing.follower.Follower;
+import com.pedropathing.geometry.Pose;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.teamcode.vision.Vision;
 
 public abstract class Hardware {
@@ -10,4 +16,9 @@ public abstract class Hardware {
 
     // Returns a fully tuned Vision containing all needed processors
     public abstract Vision createVision(HardwareMap hardwareMap);
+
+    //Offset of robot -> camera
+    public static Pose3D CameraMountingPose;
+    //Normalize a pose relative to the camera's position
+    public Pose3D normalizeCameraPose(Pose3D p) {return sub(p,CameraMountingPose);}
 }

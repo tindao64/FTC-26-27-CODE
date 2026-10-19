@@ -28,17 +28,10 @@ import org.firstinspires.ftc.vision.opencv.ColorSpace;
 import org.opencv.core.Scalar;
 
 class Team27964Hardware extends Hardware {
-    // TODO Add real offset values for team 27964
-    @Override
-    public Pose3D getCameraMountingPose(){
-        return new Pose3D(
-                new Position(DistanceUnit.CM,0,0,0,0),
-                new YawPitchRollAngles(AngleUnit.DEGREES,0,0,0,0)
-        );
-    }
     static {
         HardwareManager.INSTANCE.registerHardware("Team 27964 Bot", Team27964Hardware::new);
     }
+
     public FollowerConstants followerConstants = new FollowerConstants()
             .mass(9.5)
             .headingPIDFCoefficients(new PIDFCoefficients(1.3, 0.01, 0.1, 0.03))
@@ -86,6 +79,16 @@ class Team27964Hardware extends Hardware {
     }
 
     public static final Size CAMERA_SIZE = new Size(320, 240);
+
+    // TODO Add real offset values for team 27964
+    @Override
+    public Pose3D getCameraMountingPose(){
+        return new Pose3D(
+                new Position(DistanceUnit.CM,0,0,0,0),
+                new YawPitchRollAngles(AngleUnit.DEGREES,0,0,0,0)
+        );
+    }
+
     private VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
         return new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))

@@ -19,5 +19,7 @@ public abstract class Hardware {
     //Offset of robot -> camera
     public abstract Pose3D getCameraMountingPose();
     //Normalize a pose relative to the camera's position
-    public Pose3D normalizeCameraPose(Pose3D p) {return sub(p,getCameraMountingPose());}
+    public Pose3D normalizeCameraPose(Pose3D p) {
+        return sub(p,getCameraMountingPose());
+    }
 }

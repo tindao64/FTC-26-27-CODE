@@ -20,7 +20,7 @@ public class VisionTuning extends LinearOpMode {
         telemetry = new JoinedTelemetry(PanelsTelemetry.INSTANCE.getFtcTelemetry(), telemetry);
 
         // This is the Vision that contains all the computer vision things
-        Vision vision = HardwareManager.INSTANCE.createVision(hardwareMap);
+        Vision vision = HardwareManager.INSTANCE.getHardware().createVision(hardwareMap);
 
         // Set up the Panels camera feed
         PanelsCameraStream.INSTANCE.startStream(vision.visionPortal, 5);

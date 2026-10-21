@@ -82,19 +82,21 @@ public enum HardwareManager {
         telemetry.clearAll();
     }
 
-    public Follower createFollower(HardwareMap hardwareMap) {
+    /**
+     * Get the hardware. Auto-selects if there is exactly one Hardware
+     * registered and nothing is selected
+     * @return the hardware
+     */
+    public Hardware getHardware() {
         if (!hasSelectedHardware()) {
-            throw new IllegalStateException("Hardware not selected!");
+            if (hardwareTypes.size() == 1) {
+                hardware = hardwareTypes.firstEntry().getValue().get();
+                assert hasSelectedHardware();
+            } else {
+                throw new IllegalStateException("Hardware not selected!");
+            }
         }
 
-        return hardware.createFollower(hardwareMap);
-    }
-
-    public Vision createVision(HardwareMap hardwareMap) {
-        if (!hasSelectedHardware()) {
-            throw new IllegalStateException("Hardware not selected!");
-        }
-
-        return hardware.createVision(hardwareMap);
+        return hardware;
     }
 }

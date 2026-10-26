@@ -92,10 +92,10 @@ public class Tuning extends SelectableOpMode {
     @Override
     public void onSelect() {
         if (follower == null) {
-            follower = HardwareManager.INSTANCE.createFollower(hardwareMap);
+            follower = HardwareManager.INSTANCE.getHardware().createFollower(hardwareMap);
             PanelsConfigurables.INSTANCE.refreshClass(this);
         } else {
-            follower = HardwareManager.INSTANCE.createFollower(hardwareMap);
+            follower = HardwareManager.INSTANCE.getHardware().createFollower(hardwareMap);
         }
 
         Drawing.init();

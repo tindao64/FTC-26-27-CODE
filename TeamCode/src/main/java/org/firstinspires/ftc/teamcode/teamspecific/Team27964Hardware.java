@@ -88,6 +88,24 @@ class Team27964Hardware extends Hardware {
                 new YawPitchRollAngles(AngleUnit.DEGREES,0,0,0,0)
         );
     }
+    // TODO Add real offset values for team 27964
+    @Override
+    public Pose3D getLauncherMountingPose() {
+        return new Pose3D(
+                new Position(DistanceUnit.CM,0,0,0,0),
+                new YawPitchRollAngles(AngleUnit.DEGREES,0,0,0,0)
+        );
+    }
+    // TODO Add real launch angle value for team 27964
+    @Override
+    public float launchAngle() {
+        return 0.785398f; //45 degrees
+    }
+    // TODO Add real launch power value for team 27964
+    @Override
+    public float launchPower() {
+        return 1f;
+    }
 
     private VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
         return new VisionPortal.Builder()

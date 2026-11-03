@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 
 
-public class GameState {
+public enum GameState {
+    INSTANCE;
+
     public enum TeamColor {
         RED,
         BLUE
     }
-    public static TeamColor TeamColor;
+    public TeamColor TeamColor;
 }

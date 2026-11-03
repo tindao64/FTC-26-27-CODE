@@ -19,7 +19,7 @@ public abstract class FollowerLinearOpMode extends BulkReadingLinearOpMode {
 
          setupBulkReading();
 
-         follower = HardwareManager.INSTANCE.createFollower(hardwareMap);
+         follower = HardwareManager.INSTANCE.getHardware().createFollower(hardwareMap);
 
          // reset position hack
          follower.setStartingPose(new Pose());

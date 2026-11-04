@@ -71,16 +71,53 @@ public class HiveAiming {
 
         return new Pose2D(DistanceUnit.METER,0f,0f, AngleUnit.RADIANS,0);
     }
-    public Position PredictPose(double initialHeight,double startingSpeed, double theta, double time /*seconds*/)
-    {
-        double xPara = startingSpeed * Math.sin(theta) * time;
-        double yPara = initialHeight + startingSpeed * Math.cos(theta) * time - 0.5f*(9.8f)*time*time;
-        
-        
-        
-        
-    return new Position(DistanceUnit.METER,0f,0f,0f,0);
+    public Position PredictPose(float initialHeight, double startingSpeed, double theta, double targetX, double targetY, float time /*seconds*/) {
+        double optimalTime = 0;
+
+        // Solve for cubic coefficients
+        double A = 48.02;
+        double B = -14.7 * startingSpeed * Math.cos(theta);
+        double C = Math.pow(startingSpeed, 2) - (9.8) * (initialHeight - targetY);
+        double D = startingSpeed * ((initialHeight - targetY)*Math.cos(theta) - s * Math.sin(theta));
+
+        double[] tValues = solveCubic(A, B, C, D);
+
+        // Check for complex or negative roots
+        if (tValues.length == 1 && tValues[0] > 0) {
+            optimalTime = tValues[0];
+            double xPara = startingSpeed * Math.sin(theta) * optimalTime;
+            double yPara = initialHeight + startingSpeed * Math.cos(theta) * optimalTime - (4.9)*Math.pow(optimalTime, 2);
+
+            // xPara is the x position, yPara is the y position, and tValues[0] is the time on the graph/the time it takes to get there.
+            return new Position(DistanceUnit.METER, xPara, yPara, 0, 0);
+        }
     }
-    
-    
+
+
+    // Solve of Cubic
+    static double[] solveCubic(double A, double B, double C, double D) {
+        double b = B / A, c = C / A, d = D / A;
+        // depressed cubic u^3 + p u + q = 0, with t = u - b/3
+        double p = c - b * b / 3.0;
+        double q = 2.0 * b * b * b / 27.0 - b * c / 3.0 + d;
+        double shift = -b / 3.0;
+        double disc = q * q / 4.0 + p * p * p / 27.0;
+
+        if (disc > 0) { // one real root
+            double s = Math.sqrt(disc);
+            return new double[] { Math.cbrt(-q / 2 + s) + Math.cbrt(-q / 2 - s) + shift };
+        } else {        // three real roots (some may repeat)
+            double r = 2 * Math.sqrt(-p / 3.0);
+            double arg = (3 * q / (2 * p)) * Math.sqrt(-3.0 / p);
+            arg = Math.max(-1, Math.min(1, arg)); // guard rounding error
+            double phi = Math.acos(arg) / 3.0;
+            return new double[] {
+                r * Math.cos(phi) + shift,
+                r * Math.cos(phi - 2 * Math.PI / 3) + shift,
+                r * Math.cos(phi - 4 * Math.PI / 3) + shift
+            };
+        }
+    }
+
+
 }

@@ -23,6 +23,8 @@ public class HiveAiming {
         YawPitchRollAngles orientation = RobotPose.getOrientation();
        float ang = hardware.launchAngle() + (float)orientation.getPitch(AngleUnit.RADIANS);
        float speed = hardware.launchPower();
+       Pose3D offset = hardware.getLauncherMountingPose();
+       Pose3D launcherpose = add(offset,RobotPose);
        float x,y,z; //x forward, y up, z side to side   local(robot) space
         x = 0; // assuming launcher shoots perfectly straight (ball isn't strafing)
        y = (float)Math.sin(ang) * speed;
@@ -32,11 +34,14 @@ public class HiveAiming {
        //Calculate coordinates of goal on a 2D plane to make calc in PredictPose easier
         float planex = (float)Math.sqrt(Math.pow(goalposition.x, 2) + Math.pow(goalposition.z,2));
         float planey = (float)goalposition.y;
+        float initialheight = (float)launcherpose.getPosition().toUnit(DistanceUnit.METER).y;
+
         /*
         TODO: get closest point on ballistic curve with calc(Going to be/is in HiveAimingMath branch)
         float pointx = ......
         float pointy = ......
          */
+
         float pointx = 0f;
         float pointy = 0f;
         //Get vector from robot -> goal on xz plane

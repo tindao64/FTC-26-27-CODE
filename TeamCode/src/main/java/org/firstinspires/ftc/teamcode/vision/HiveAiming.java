@@ -24,9 +24,26 @@ public class HiveAiming {
        float ang = hardware.launchAngle() + (float)orientation.getPitch(AngleUnit.RADIANS);
        float speed = hardware.launchPower();
        float x,y,z; //x forward, y up, z side to side   local(robot) space
-       x = (float)Math.cos(ang) * speed;
+        x = 0; // assuming launcher shoots perfectly straight (ball isn't strafing)
        y = (float)Math.sin(ang) * speed;
-       z = 0; // assuming launcher shoots perfectly straight (ball isn't strafing)
+       z = (float)Math.cos(ang) * speed;
+        Position robotposition = RobotPose.getPosition();
+       Position goalposition = HivePose.getPosition();
+       //Calculate coordinates of goal on a 2D plane to make calc in PredictPose easier
+        float planex = (float)Math.sqrt(Math.pow(goalposition.x, 2) + Math.pow(goalposition.z,2));
+        float planey = (float)goalposition.y;
+        /*
+        TODO: get closest point on ballistic curve with calc(Going to be/is in HiveAimingMath branch)
+        float pointx = ......
+        float pointy = ......
+         */
+        float pointx = 0f;
+        float pointy = 0f;
+        //Get vector from robot -> goal on xz plane
+        Position robottohive = sub(goalposition,robotposition);
+        //Get angle theta from z axis to goal - robot vector on xz plane
+        float theta = (float)Math.atan2(z,x);
+
        float yaw = (float)orientation.getYaw(AngleUnit.RADIANS);
        //Rotation around the Y axis with yaw = theta
        float[][] rotmatrix = {
@@ -35,6 +52,7 @@ public class HiveAiming {
                {(float)Math.sin(yaw),0f,(float)Math.cos(yaw)}
        };
        //Rotate plane of launch in local(robot) space to global(field) space
+
         float tmpx,tmpy,tmpz;
         tmpx = x;
         tmpy = y;
@@ -44,43 +62,20 @@ public class HiveAiming {
         y = rotmatrix[1][0] * tmpx + rotmatrix[1][1] * tmpy + rotmatrix[1][2] * tmpz;
         z = rotmatrix[2][0] * tmpx + rotmatrix[2][1] * tmpy + rotmatrix[2][2] * tmpz;
         Position v = new Position(DistanceUnit.METER,x,y,z,0);
-        //Binary search for closest point on ballistic curve
-        float bottom = 0f;
-        float middle = 2.5f; //seconds
-        float top = 5f; // seconds
-        int iterations = 10;
-        Position prediction;
-        for (int i = 0; i < iterations; i++)
-        {
-            prediction = PredictPose(add(RobotPose.getPosition(),hardware.getLauncherMountingPose().getPosition()),v,middle);
-            Position difference = sub(prediction,HivePose.getPosition());
-            difference = new Position(
-                            DistanceUnit.METER,
-                            Math.abs(difference.x),
-                            Math.abs(difference.y),
-                            Math.abs(difference.z),
-                            0
-                    );
-            //Get distance of difference
-            float xydistance = (float)Math.sqrt(Math.pow(difference.x,2) + Math.pow(difference.y, 2));
-            float distance = (float)Math.sqrt(Math.pow(xydistance,2) + Math.pow(difference.z, 2));
-            if (distance > middle)
-            {
-                bottom = middle;
-            }
-            else {
-                top = middle;
-            }
-            middle = (top + bottom)/2f;
-
-        }
         float epsilon = 0.001f;
 
         return new Pose2D(DistanceUnit.METER,0f,0f, AngleUnit.RADIANS,0);
     }
-    public Position PredictPose(Position StartingPose,Position StartingVelocity, float Time /*seconds*/)
+    public Position PredictPose(double initialHeight,double startingSpeed, double theta, double time /*seconds*/)
     {
+        double xPara = startingSpeed * Math.sin(theta) * time;
+        double yPara = initialHeight + startingSpeed * Math.cos(theta) * time - 0.5f*(9.8f)*time*time;
+        
+        
+        
+        
     return new Position(DistanceUnit.METER,0f,0f,0f,0);
     }
-
+    
+    
 }

@@ -71,16 +71,7 @@ public class HiveAiming {
 
         return new Pose2D(DistanceUnit.METER,0f,0f, AngleUnit.RADIANS,0);
     }
-    public Position PredictPose(double initialHeight,double startingSpeed, double theta, double time /*seconds*/)
-    {
-        double xPara = startingSpeed * Math.sin(theta) * time;
-        double yPara = initialHeight + startingSpeed * Math.cos(theta) * time - 0.5f*(9.8f)*time*time;
-        
-        
-        
-        
-    return new Position(DistanceUnit.METER,0f,0f,0f,0);
-    }
+
     
     
 }

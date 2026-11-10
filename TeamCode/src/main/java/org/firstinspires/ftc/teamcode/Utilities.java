@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
@@ -13,8 +12,8 @@ public class Utilities {
     }
     public static Position add(Position a, Position b)
     {
-        Position unitadjustedb = b.toUnit(a.unit);
-        return new Position(a.unit,a.x + unitadjustedb.x,a.y + unitadjustedb.y,a.z + unitadjustedb.z,Math.max(a.acquisitionTime,b.acquisitionTime));
+        Position adjustedB = b.toUnit(a.unit);
+        return new Position(a.unit,a.x + adjustedB.x,a.y + adjustedB.y,a.z + adjustedB.z,Math.max(a.acquisitionTime,b.acquisitionTime));
     }
     public static YawPitchRollAngles add(YawPitchRollAngles a, YawPitchRollAngles b)
     {
@@ -26,8 +25,8 @@ public class Utilities {
     }
     public static Position sub(Position a, Position b)
     {
-        Position unitadjustedb = b.toUnit(a.unit);
-        return new Position(a.unit,a.x - unitadjustedb.x,a.y - unitadjustedb.y,a.z - unitadjustedb.z,Math.max(a.acquisitionTime,b.acquisitionTime));
+        Position adjustedB = b.toUnit(a.unit);
+        return new Position(a.unit,a.x - adjustedB.x,a.y - adjustedB.y,a.z - adjustedB.z,Math.max(a.acquisitionTime,b.acquisitionTime));
     }
     public static YawPitchRollAngles sub(YawPitchRollAngles a, YawPitchRollAngles b)
     {

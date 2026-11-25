@@ -1,30 +1,19 @@
 package org.firstinspires.ftc.teamcode.vision;
 
-import static org.firstinspires.ftc.teamcode.Utilities.Pose3DToPose;
-import static org.firstinspires.ftc.teamcode.Utilities.PoseToVector;
-import static org.firstinspires.ftc.teamcode.Utilities.VectorToPose;
-import static org.firstinspires.ftc.teamcode.Utilities.add;
-
-import static java.lang.Math.sin;
-
 import androidx.annotation.NonNull;
-
 import com.pedropathing.follower.Follower;
 import com.pedropathing.geometry.Pose;
 import com.pedropathing.math.Vector;
-
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.robotcore.external.navigation.*;
 import org.firstinspires.ftc.teamcode.GameState;
 import org.firstinspires.ftc.teamcode.teamspecific.Hardware;
 import org.firstinspires.ftc.vision.apriltag.AprilTagClusterDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.ArrayList;
+
+import static org.firstinspires.ftc.teamcode.Utilities.*;
+
 //region BackupMath
 /*
 public Pose2D GetMoveIntent(Pose3D HivePose,Pose3D RobotPose)
@@ -129,10 +118,10 @@ public Pose2D GetMoveIntent(Pose3D HivePose,Pose3D RobotPose)
             }
         }
        */
-        //endregion
+//endregion
 public class HiveAiming {
 
-    public enum GoalSide{
+    public enum GoalSide {
         Audience,
         Team
     }
@@ -141,59 +130,55 @@ public class HiveAiming {
     private Vision vision;
     private Follower follower;
     double arclength = 0.3926f /*22.5 degrees because 22.5*2 = 45 for estimate*/; // radians either direction from the goal
-    double arcradius = 20f;
-    public HiveAiming(Hardware hardware,Vision vision,Follower  follower) {
+
+    public HiveAiming(Hardware hardware, Vision vision, Follower follower) {
         this.hardware = hardware;
         this.vision = vision;
         this.follower = follower;
     }
+
     // Get goal pose in field space(global space)
-    public Pose3D GetGoalPose() throws Exception {
+    public Pose3D getGoalPose() throws Exception {
         GoalSide side = null;
-        String goalname = GameState.teamColor  == GameState.TeamColor.RED ? "RED" : "BLUE";
+        String goalname = GameState.teamColor == GameState.TeamColor.RED ? "RED" : "BLUE";
         ArrayList<AprilTagDetection> detections = vision.aprilTagProcessor.getDetections();
         AprilTagDetection detection = null;
-        for(AprilTagDetection d : detections)
-        {
+        for (AprilTagDetection d : detections) {
             //Is goal, not single tag and either detection is null or it is more scorable.
-            if(d instanceof AprilTagClusterDetection && ((AprilTagClusterDetection) d).metadata.name.contains(goalname))
-            {
-                if(d.ftcPose.elevation > 43.95f)
-                {
+            if (d instanceof AprilTagClusterDetection && ((AprilTagClusterDetection) d).metadata.name.contains(goalname)) {
+                if (d.ftcPose.elevation > 43.95f) {
                     detection = d;
-                }
-                else{
-                    side = GetRobotPose3D().getPosition().y > 70.75f ? GoalSide.Audience : GoalSide.Team;
+                } else {
+                    side = getRobotPose3D().getPosition().y > 70.75f ? GoalSide.Audience : GoalSide.Team;
                 }
             }
         }
-        Pose3D robotpose3d = GetRobotPose3D();
+        Pose3D robotpose3d = getRobotPose3D();
         Pose3D pose;
-        if(detection == null && side != null)
-        {
-            pose = new Pose3D(new Position(DistanceUnit.INCH,70.75f + (GameState.teamColor == GameState.TeamColor.RED ? -24.73f : 24.73f),70.75f + (side == GoalSide.Audience ? -8.58f : 8.58f),0,0), new YawPitchRollAngles(AngleUnit.DEGREES,side == GoalSide.Team ? 0f : 180f, 30f, 0f,0));
-        }
-        else {
+        if (detection == null && side != null) {
+            pose = new Pose3D(new Position(DistanceUnit.INCH, 70.75f + (GameState.teamColor == GameState.TeamColor.RED ? -24.73f : 24.73f), 70.75f + (side == GoalSide.Audience ? -8.58f : 8.58f), 0, 0), new YawPitchRollAngles(AngleUnit.DEGREES, side == GoalSide.Team ? 0f : 180f, 30f, 0f, 0));
+        } else {
             throw new Exception("Shit happened: HiveAiming side doesnt exist and no april tag was found");
         }
-        pose = add(hardware.normalizeCameraPose(detection.robotPose),robotpose3d);
+        pose = add(hardware.normalizeCameraPose(detection.robotPose), robotpose3d);
         return pose;
     }
 
     @NonNull
-    private Pose3D GetRobotPose3D() {
+    private Pose3D getRobotPose3D() {
         Pose robotpose = follower.getPose();
-        return new Pose3D(new Position(DistanceUnit.INCH,robotpose.getX(),0,robotpose.getY(),0),new YawPitchRollAngles(AngleUnit.RADIANS,robotpose.getHeading(),0,0,0));
+        return new Pose3D(new Position(DistanceUnit.INCH, robotpose.getX(), 0, robotpose.getY(), 0), new YawPitchRollAngles(AngleUnit.RADIANS, robotpose.getHeading(), 0, 0, 0));
     }
+
     //return the target position of the robot in order to score
-    private Pose GetShootingPose() throws Exception {
-        Pose GoalPose = Pose3DToPose(GetGoalPose());
+    private Pose getShootingPose() throws Exception {
+        Pose GoalPose = Pose3DToPose(getGoalPose());
         Vector circlecenter = PoseToVector(GoalPose);
-        Vector robotpose = PoseToVector(Pose3DToPose(GetRobotPose3D()));
+        Vector robotpose = PoseToVector(Pose3DToPose(getRobotPose3D()));
         Vector goal2robot = robotpose.minus(circlecenter);
         goal2robot = goal2robot.normalize();
-        double angle = Math.atan2(goal2robot.getYComponent(),goal2robot.getXComponent());
-       // 0 - 360 to -180 to 180
+        double angle = Math.atan2(goal2robot.getYComponent(), goal2robot.getXComponent());
+        // 0 - 360 to -180 to 180
         
         /*angle %= 360;
         if(angle > 180)
@@ -203,16 +188,15 @@ public class HiveAiming {
         double goalHeading = GoalPose.getHeading();
         double goalThresh = goalHeading + Math.PI;
         goalThresh %= Math.PI * 2;
-        if(Math.abs(angle - goalHeading) < arclength) {
+        if (Math.abs(angle - goalHeading) < arclength) {
             Pose p = VectorToPose(circlecenter.plus(goal2robot));
             p.setHeading(angle + Math.PI);
             return p;
-        }
-        else{
+        } else {
             double clampedangle = angle < goalThresh ? arclength : -arclength;
             double y = Math.sin(clampedangle);
             double x = Math.cos(clampedangle);
-            Vector v = new Vector(x,y);
+            Vector v = new Vector(x, y);
             Pose p = VectorToPose(circlecenter.plus(v));
             double direction = clampedangle + Math.PI;
             p.setHeading(direction);
@@ -222,7 +206,4 @@ public class HiveAiming {
     }
 
 
-
-    
-    
 }

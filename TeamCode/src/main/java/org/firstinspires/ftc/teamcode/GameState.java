@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
 
-
 public enum GameState {
     INSTANCE;
 
@@ -9,5 +8,6 @@ public enum GameState {
         RED,
         BLUE
     }
+
     public static TeamColor teamColor;
 }

@@ -15,13 +15,10 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
-import org.firstinspires.ftc.robotcore.external.navigation.Position;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
+import org.firstinspires.ftc.robotcore.external.navigation.*;
 import org.firstinspires.ftc.teamcode.vision.Vision;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorRange;
 import org.firstinspires.ftc.vision.opencv.ColorSpace;
@@ -82,12 +79,28 @@ class Team27964Hardware extends Hardware {
 
     // TODO Add real offset values for team 27964
     @Override
-    public Pose3D getCameraMountingPose(){
+    public Pose3D getCameraMountingPose() {
         return new Pose3D(
-                new Position(DistanceUnit.CM,0,0,0,0),
-                new YawPitchRollAngles(AngleUnit.DEGREES,0,0,0,0)
+                new Position(DistanceUnit.CM, 0, 0, 0, 0),
+                new YawPitchRollAngles(AngleUnit.DEGREES, 0, 0, 0, 0)
         );
     }
+
+    // TODO Add real offset values for team 27964
+    @Override
+    public Pose3D getLauncherMountingPose() {
+        return new Pose3D(
+                new Position(DistanceUnit.CM, 0, 0, 0, 0),
+                new YawPitchRollAngles(AngleUnit.DEGREES, 0, 0, 0, 0)
+        );
+    }
+
+    // TODO Add real radius for team 27964
+    @Override
+    public float getLaunchRadius() {
+        return 1f;
+    }
+
 
     private VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
         return new VisionPortal.Builder()
@@ -127,13 +140,20 @@ class Team27964Hardware extends Hardware {
         return colorBlobProcessor;
     }
 
+    private AprilTagProcessor createAprilTagProcessor() {
+        return new AprilTagProcessor.Builder()
+                .setNumThreads(4)
+                .build();
+    }
+
     @Override
     public Vision createVision(HardwareMap hardwareMap) {
         ColorBlobLocatorProcessor colorBlobProcessor = createBlobProcessor();
+        AprilTagProcessor aprilTagProcessor = createAprilTagProcessor();
         VisionPortal visionPortal = createVisionPortalBuilder(hardwareMap)
-                .addProcessors(colorBlobProcessor)
+                .addProcessors(colorBlobProcessor, aprilTagProcessor)
                 .build();
 
-        return new Vision(visionPortal, colorBlobProcessor, CAMERA_SIZE);
+        return new Vision(visionPortal, colorBlobProcessor, aprilTagProcessor, CAMERA_SIZE);
     }
 }

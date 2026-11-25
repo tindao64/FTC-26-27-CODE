@@ -22,4 +22,9 @@ public abstract class Hardware {
     public Pose3D normalizeCameraPose(Pose3D p) {
         return sub(p,getCameraMountingPose());
     }
+    //Offset of robot -> launcher
+    public abstract Pose3D getLauncherMountingPose();
+
+    //Meters from the launcher to the goal in order to score
+    public abstract float getLaunchRadius();
 }

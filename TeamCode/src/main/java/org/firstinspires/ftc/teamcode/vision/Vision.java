@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.vision;
 import android.util.Size;
 import com.bylazar.camerastream.PanelsCameraStream;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
 import org.opencv.core.Point;
 
@@ -30,6 +31,8 @@ public class Vision {
      * will find circular blobs of yellow on the camera stream, which are likely balls.
      */
     public final ColorBlobLocatorProcessor colorBlobProcessor;
+    // Finds poses of april tags within frame
+    public final AprilTagProcessor aprilTagProcessor;
 
     /**
      * Normalizes pixel-based coordinates to a 0.0-1.0 based coordinate system.
@@ -56,10 +59,10 @@ public class Vision {
      * Not very important unless you're adding another processor.
      *********************************************/
     private final Size cameraSize;
-    public Vision(VisionPortal visionPortal, ColorBlobLocatorProcessor colorBlobProcessor, Size cameraSize) {
+    public Vision(VisionPortal visionPortal, ColorBlobLocatorProcessor colorBlobProcessor,AprilTagProcessor aprilTagProcessor, Size cameraSize) {
         this.visionPortal = visionPortal;
         this.colorBlobProcessor = colorBlobProcessor;
-
+        this.aprilTagProcessor = aprilTagProcessor;
         this.cameraSize = cameraSize;
     }
 }

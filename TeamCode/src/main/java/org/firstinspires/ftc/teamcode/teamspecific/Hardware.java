@@ -24,8 +24,7 @@ public abstract class Hardware {
     }
     //Offset of robot -> launcher
     public abstract Pose3D getLauncherMountingPose();
-    //Angle the ball is launched at, in radians
-    public abstract float launchAngle();
-    //Power the ball is launched with, in m/s
-    public abstract float launchPower();
+
+    //Meters from the launcher to the goal in order to score
+    public abstract float getLaunchRadius();
 }

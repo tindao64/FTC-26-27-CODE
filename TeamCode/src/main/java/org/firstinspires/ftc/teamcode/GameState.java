@@ -9,5 +9,5 @@ public enum GameState {
         RED,
         BLUE
     }
-    public TeamColor TeamColor;
+    public static TeamColor teamColor;
 }

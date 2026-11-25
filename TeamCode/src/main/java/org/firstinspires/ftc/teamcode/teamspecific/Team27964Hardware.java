@@ -22,6 +22,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Position;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.vision.Vision;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorBlobLocatorProcessor;
 import org.firstinspires.ftc.vision.opencv.ColorRange;
 import org.firstinspires.ftc.vision.opencv.ColorSpace;
@@ -96,16 +97,12 @@ class Team27964Hardware extends Hardware {
                 new YawPitchRollAngles(AngleUnit.DEGREES,0,0,0,0)
         );
     }
-    // TODO Add real launch angle value for team 27964
+    // TODO Add real radius for team 27964
     @Override
-    public float launchAngle() {
-        return 0.785398f; //45 degrees
-    }
-    // TODO Add real launch power value for team 27964
-    @Override
-    public float launchPower() {
+    public float getLaunchRadius() {
         return 1f;
     }
+
 
     private VisionPortal.Builder createVisionPortalBuilder(HardwareMap hardwareMap) {
         return new VisionPortal.Builder()
@@ -144,14 +141,21 @@ class Team27964Hardware extends Hardware {
 
         return colorBlobProcessor;
     }
+    private AprilTagProcessor createAprilTagProccesor()
+    {
+        return new AprilTagProcessor.Builder()
+                .setNumThreads(4)
+                .build();
+    }
 
     @Override
     public Vision createVision(HardwareMap hardwareMap) {
         ColorBlobLocatorProcessor colorBlobProcessor = createBlobProcessor();
+        AprilTagProcessor aprilTagProcessor = createAprilTagProccesor();
         VisionPortal visionPortal = createVisionPortalBuilder(hardwareMap)
-                .addProcessors(colorBlobProcessor)
+                .addProcessors(colorBlobProcessor,aprilTagProcessor)
                 .build();
 
-        return new Vision(visionPortal, colorBlobProcessor, CAMERA_SIZE);
+        return new Vision(visionPortal, colorBlobProcessor, aprilTagProcessor,CAMERA_SIZE);
     }
 }

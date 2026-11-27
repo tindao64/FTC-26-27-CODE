@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.pedropathing.FollowerLinearOpMode;
 
-@TeleOp()
+@TeleOp(name="TeleOp OpMode")
 public class TeleOpMode extends FollowerLinearOpMode {
 
     @Override
